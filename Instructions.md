@@ -1,400 +1,400 @@
-# SESLAA Motion Stack — Flutter Development Instructions
+ ## COMPLETE SESLAA MOTION STACK
 
-## 1. PROJECT IDENTITY
+## FOLLOW `instructions.md` FIRST — DO NOT SKIP ANY REQUIREMENT
 
-**Application Name:** SESLAA Motion Stack
+You are working on the **SESLAA Motion Stack** project.
 
-**Short Name:** SESLAA Motion
+The project contains an `instructions.md` file. **Read `instructions.md` completely before making any changes. Follow every applicable instruction in that file.**
 
-**Company / Copyright Owner:** Narga Engineering Private Limited
+Do not simplify, ignore, replace, or bypass requirements merely to make the project compile.
 
-**Brand:** SESLAA
-
-**Website:** https://seslaa.com
-
-**Technology:** Flutter + Android + Monocular Computer Vision + AI Object Detection + Object Tracking + Motion Analysis
-
-The application must be developed as a **Flutter-based Android application** using the existing SESLAA monocular-vision implementation as the technical reference.
+The objective is to deliver a **complete, buildable, installable Flutter Android application with a real on-device computer-vision pipeline**.
 
 ---
 
-# 2. SOURCE PROJECT
+# 1. SOURCE IMPLEMENTATION
 
-Use this repository as the primary computer-vision reference:
+Use the existing SESLAA monocular-vision implementation as the technical reference:
 
 https://github.com/Nara-lab/seslaa_motion_monocular-vision-based-obstacle-detection
 
-First inspect the complete repository.
+Inspect the repository before implementing the Android/Flutter version.
 
-Understand:
+Understand and preserve the existing concepts:
 
-* Main.py
-* Constants.py
-* requirements.txt
-* mrcnn/
-* matcher/
-* data_model/
-* camera_calibration/
-* weights/
-* export/
-* utils/
 * Mask R-CNN
 * object detection
-* segmentation
-* SIFT
-* SURF
-* ORB
-* feature matching
-* Kalman filtering
+* object segmentation
+* ORB/SIFT/SURF feature matching where appropriate
 * object tracking
+* Kalman filtering
 * motion estimation
 * obstacle detection
 * camera calibration
-* model weights
-* configuration
-* dependencies
+* monocular vision
 
-The Python implementation is the **reference algorithm**.
-
-Do not blindly rewrite it.
+Do not create a generic camera demo unrelated to the existing project.
 
 ---
 
-# 3. PRIMARY OBJECTIVE
+# 2. FINAL PRODUCT
 
-Create:
+The final product must be:
 
-# SESLAA Motion Stack
+**SESLAA Motion Stack**
 
-as a **Flutter Android application** capable of using a generic Android smartphone camera for monocular computer vision.
+A Flutter-based Android application that works on a **generic Android smartphone** using its built-in camera.
 
-Architecture:
+The application must perform actual:
 
 ```text
-Flutter UI
-      ↓
-Flutter Camera Layer
-      ↓
-Platform / Native Vision Bridge
-      ↓
-AI Inference Engine
-      ↓
-Object Detection
-      ↓
-Segmentation
-      ↓
-Feature Matching
-      ↓
-Object Tracking
-      ↓
-Kalman Filter
-      ↓
-Motion Estimation
-      ↓
-Obstacle Analysis
-      ↓
-Flutter Visualization
+PHONE CAMERA
+     ↓
+IMAGE FRAME
+     ↓
+PRE-PROCESSING
+     ↓
+ON-DEVICE AI INFERENCE
+     ↓
+OBJECT DETECTION
+     ↓
+SEGMENTATION
+     ↓
+OBJECT TRACKING
+     ↓
+FEATURE MATCHING
+     ↓
+KALMAN FILTER
+     ↓
+MOTION ESTIMATION
+     ↓
+OBSTACLE ANALYSIS
+     ↓
+FLUTTER UI
+```
+
+This must be a real implementation.
+
+**Do not deliver a UI-only prototype.**
+
+**Do not use fake detection results.**
+
+**Do not hard-code confidence values.**
+
+**Do not stop after creating the Flutter screens.**
+
+---
+
+# 3. CRITICAL ISSUE TO RESOLVE
+
+The previous implementation did not include a complete on-device TensorFlow/vision pipeline because the native Android plugin/dependency set was incompatible with the installed Gradle/Android SDK environment.
+
+### THIS MUST NOW BE RESOLVED.
+
+Do not simply report:
+
+> "The native Android plugin is incompatible."
+
+Instead:
+
+1. Inspect the current Flutter version.
+2. Inspect Dart version.
+3. Inspect Android Gradle Plugin version.
+4. Inspect Gradle version.
+5. Inspect compile SDK.
+6. Inspect target SDK.
+7. Inspect minimum SDK.
+8. Inspect installed Android SDK platforms.
+9. Inspect installed Android Build Tools.
+10. Inspect Java/JDK version.
+11. Inspect Android NDK version if required.
+12. Inspect all Flutter plugins.
+13. Identify the exact incompatibility.
+14. Upgrade/downgrade compatible components as necessary.
+15. Install missing SDK/NDK/build dependencies if the environment allows it.
+16. Replace incompatible packages with maintained compatible alternatives where necessary.
+17. Rebuild.
+18. Test.
+19. Fix remaining errors.
+20. Continue until the complete application can build.
+
+Do not leave the vision pipeline as a placeholder because of dependency inconvenience.
+
+---
+
+# 4. ENVIRONMENT SETUP
+
+First run and inspect:
+
+```bash
+flutter doctor -v
+```
+
+Also inspect:
+
+```bash
+flutter --version
+dart --version
+java -version
+```
+
+Inspect Android configuration:
+
+```bash
+flutter doctor --android-licenses
+```
+
+where appropriate.
+
+Inspect:
+
+```bash
+sdkmanager --list
+```
+
+if available.
+
+Inspect:
+
+```bash
+gradle --version
+```
+
+where appropriate.
+
+Determine a compatible matrix:
+
+```text
+Flutter
+Dart
+Java
+Gradle
+Android Gradle Plugin
+compileSdk
+targetSdk
+minSdk
+NDK
+```
+
+Use a **known-compatible stable combination**.
+
+Do not arbitrarily upgrade everything.
+
+---
+
+# 5. INSTALL MISSING DEPENDENCIES
+
+If the environment is missing required Android SDK/build components and installation is possible:
+
+**INSTALL THEM.**
+
+Potential requirements include:
+
+* Android SDK Platform
+* Android SDK Build Tools
+* Android SDK Command-line Tools
+* Android Platform Tools
+* Android NDK
+* CMake
+* required Java/JDK version
+
+Use the environment's available package/SDK manager.
+
+Do not merely document that something is missing if it can actually be installed.
+
+After installation:
+
+```bash
+flutter doctor -v
+```
+
+must be re-run.
+
+---
+
+# 6. RESOLVE GRADLE/ANDROID COMPATIBILITY
+
+Inspect:
+
+```text
+android/build.gradle
+android/settings.gradle
+android/gradle.properties
+android/gradle/wrapper/gradle-wrapper.properties
+android/app/build.gradle
+```
+
+Resolve:
+
+* Gradle incompatibility
+* Android Gradle Plugin incompatibility
+* Java incompatibility
+* Kotlin incompatibility
+* compile SDK incompatibility
+* namespace errors
+* manifest errors
+* plugin incompatibility
+* NDK/CMake incompatibility
+
+Do not blindly upgrade dependencies.
+
+Choose versions that are mutually compatible.
+
+Document the final working versions in:
+
+```text
+BUILD_ENVIRONMENT.md
 ```
 
 ---
 
-# 4. FLUTTER REQUIREMENT
+# 7. REAL ON-DEVICE AI PIPELINE
 
-The application UI and application architecture must be Flutter-based.
+The application MUST include a real on-device inference engine.
 
-Use:
+Preferred options:
 
-* Flutter
-* Dart
-* Android
-* Android NDK where required
-* Platform Channels / FFI where appropriate
-* Camera plugin or native CameraX bridge
-* TensorFlow Lite / ONNX Runtime / other suitable mobile inference runtime
-* OpenCV where required
+### Option A — TensorFlow Lite
 
-Preferred Flutter structure:
+Use TensorFlow Lite if the existing model can be converted and deployed correctly.
 
-```text id="b4s1ed"
-lib/
-├── main.dart
-├── app/
-├── core/
-├── camera/
-├── detection/
-├── segmentation/
-├── tracking/
-├── matching/
-├── kalman/
-├── motion/
-├── obstacle/
-├── inference/
-├── privacy/
-├── settings/
-├── licenses/
-└── ui/
-```
+Pipeline:
 
----
-
-# 5. IMPORTANT ARCHITECTURE RULE
-
-Do NOT attempt to execute the complete Python runtime inside Flutter.
-
-Do not require:
-
-* Python interpreter
-* desktop Python
-* pip
-* Flask server
-* local Python HTTP server
-* external computer
-
-for normal Android operation.
-
-The final APK must work independently on a generic Android smartphone.
-
----
-
-# 6. PYTHON → FLUTTER MIGRATION
-
-Map the existing Python implementation as follows:
-
-```text id="zzk1hv"
-Python
-   ↓
-Algorithm Analysis
-   ↓
-Mobile-Compatible Implementation
-```
-
-Use:
-
-### Dart
-
-For:
-
-* UI
-* application state
-* configuration
-* settings
-* user interaction
-* visualization
-* application logic
-
-### Native Android / Kotlin
-
-For:
-
-* camera integration where required
-* Android lifecycle
-* hardware acceleration
-* Android-specific functionality
-
-### C++ / OpenCV
-
-Where beneficial for:
-
-* feature extraction
-* ORB
-* image processing
-* high-performance tracking
-* computer-vision calculations
-
-### TensorFlow Lite / ONNX Runtime
-
-For:
-
-* neural-network inference
-
-Use Flutter platform channels or FFI to communicate between Flutter and native/native-compiled vision components.
-
----
-
-# 7. OBJECT DETECTION
-
-The original project uses Mask R-CNN.
-
-Investigate whether the existing Mask R-CNN model can be converted to:
-
-```text id="oyv2ny"
-Mask R-CNN
-    ↓
+```text
+Existing Model
+      ↓
 TensorFlow/SavedModel
-    ↓
+      ↓
 TensorFlow Lite
-    ↓
-Flutter Android
+      ↓
+Android Native Runtime
+      ↓
+Flutter Bridge
 ```
 
-or:
+### Option B — ONNX Runtime Mobile
 
-```text id="1jnhai"
-Mask R-CNN
-    ↓
+If TensorFlow Lite is not technically suitable:
+
+```text
+Existing Model
+      ↓
 ONNX
-    ↓
+      ↓
 ONNX Runtime Mobile
-    ↓
-Flutter Android
+      ↓
+Android
+      ↓
+Flutter
 ```
 
-Use the technically best option.
+### Option C — Other mobile-compatible runtime
 
-Do not fabricate model files.
+Use another inference engine only if technically justified.
 
-Do not fabricate weights.
-
-If the original Mask R-CNN cannot reasonably run in real time on generic Android devices:
-
-1. Document why.
-2. Benchmark it.
-3. Investigate a mobile-compatible equivalent.
-4. Preserve the same detection/segmentation functionality as closely as possible.
-5. Document any accuracy differences.
+Document the decision.
 
 ---
 
-# 8. FEATURE MATCHING
+# 8. MASK R-CNN
 
-Preserve the existing feature-matching concept.
+The original implementation uses Mask R-CNN.
 
-Support:
+Investigate the actual model and weights.
 
-* ORB
-* SIFT where appropriate
-* SURF where technically and legally appropriate
+Determine:
 
-Default:
+* framework
+* model format
+* input size
+* output tensors
+* classes
+* weights
+* preprocessing
+* postprocessing
+* license
 
-**ORB**
+Attempt actual model conversion.
 
-because it is generally more appropriate for mobile real-time processing.
+Do not simply replace Mask R-CNN without investigation.
 
-Implement the matcher as a replaceable service.
+If Mask R-CNN cannot provide practical real-time performance on generic phones:
 
-Example:
+1. Benchmark it.
+2. Document the limitation.
+3. Select a mobile-compatible segmentation/detection model.
+4. Maintain equivalent functionality as closely as possible.
+5. Clearly document the change.
 
-```text id="d6f2qk"
-FeatureMatcher
-      ├── ORBMatcher
-      ├── SIFTMatcher
-      └── SURFMatcher
-```
+The application must still perform **real on-device object detection**.
 
 ---
 
-# 9. OBJECT TRACKING
+# 9. MODEL FILES
 
-Implement persistent object tracking.
+Do not invent model weights.
 
-Each tracked object should contain:
+Do not generate fake `.tflite` or `.onnx` files.
 
-```text id="1hpl3e"
-trackingId
-objectClass
-boundingBox
+Use real model files.
+
+If conversion is required, actually perform the conversion where possible.
+
+Verify that the resulting model can:
+
+* load
+* initialize
+* run inference
+* return tensors
+* produce detections
+* produce confidence values
+* produce bounding boxes
+* produce masks if segmentation is supported
+
+---
+
+# 10. FLUTTER ↔ NATIVE VISION BRIDGE
+
+The Flutter application should use a clean interface between Dart and native inference.
+
+Preferred architecture:
+
+```text
+Flutter/Dart
+     ↓
+Platform Channel / FFI
+     ↓
+Kotlin / Java / C++
+     ↓
+TensorFlow Lite / ONNX Runtime
+     ↓
+AI Model
+```
+
+Do not send unnecessary full-resolution frames repeatedly through platform channels.
+
+Use efficient native processing where possible.
+
+Return structured detection results such as:
+
+```text
+objectId
+className
 confidence
-position
-velocity
+boundingBox
+mask
 motionState
-lastSeen
-trackingConfidence
+obstacleState
+relativePosition
 ```
-
-Tracking IDs must be generated from actual tracking results.
-
-Never hard-code IDs.
 
 ---
 
-# 10. KALMAN FILTER
+# 11. CAMERA PIPELINE
 
-Port the existing Kalman-filter logic.
+Use the Android phone camera.
 
-The Kalman filter should support:
-
-* position prediction
-* velocity estimation
-* state prediction
-* uncertainty
-* timestamp handling
-* lost-object prediction
-
-Keep the implementation independent of the Flutter UI.
-
----
-
-# 11. MOTION DETECTION
-
-Implement real motion analysis.
-
-Possible states:
-
-```text id="l7b5ud"
-STATIC
-MOVING
-APPROACHING
-RECEDING
-UNKNOWN
-```
-
-Motion must be calculated from actual image/object tracking information.
-
-Account for camera movement where possible.
-
----
-
-# 12. OBSTACLE DETECTION
-
-Create a dedicated obstacle-analysis layer.
-
-Inputs may include:
-
-* object class
-* bounding box
-* object position
-* apparent size
-* tracking velocity
-* motion state
-* relative depth
-* trajectory
-* confidence
-
-Output:
-
-```text id="0f2ehz"
-SAFE
-CAUTION
-WARNING
-DANGER
-```
-
-Do not claim exact distance in meters unless the camera calibration and algorithm actually support accurate metric distance.
-
-Use:
-
-**Relative Distance**
-
-when appropriate.
-
----
-
-# 13. FLUTTER CAMERA
-
-Use a Flutter-compatible camera implementation.
-
-Preferred approach:
-
-```text id="2wpxra"
-Flutter Camera
-      ↓
-Android CameraX/native camera
-      ↓
-Image stream
-      ↓
-Vision Engine
-```
+The application must work with a normal generic Android phone.
 
 Support:
 
@@ -402,97 +402,231 @@ Support:
 * front camera
 * camera switching
 * autofocus
-* orientation
 * rotation
-* resolution
-* FPS
-* lifecycle management
+* portrait
+* landscape
+* different resolutions
+* different aspect ratios
 
-Do not process full-resolution frames unnecessarily.
+The camera must provide frames to the inference pipeline.
+
+Do not create a fake camera preview.
 
 ---
 
-# 14. FRAME PROCESSING
+# 12. REAL-TIME DETECTION
 
-Create an efficient frame-processing pipeline.
+The application must process actual camera frames.
 
-```text id="2c0eq6"
-Camera Frame
-    ↓
+For each frame:
+
+```text
+Camera
+ ↓
+Frame
+ ↓
 Resize
-    ↓
+ ↓
 Normalize
-    ↓
-AI Inference
-    ↓
+ ↓
+Inference
+ ↓
+Post-processing
+ ↓
 Detection
-    ↓
+ ↓
 Tracking
-    ↓
+ ↓
 Motion
-    ↓
-Obstacle Analysis
-    ↓
-Flutter UI
+ ↓
+Obstacle analysis
+ ↓
+Display
 ```
 
-Avoid:
+Use asynchronous processing.
 
-* unnecessary image copies
-* repeated bitmap conversion
-* blocking Dart UI thread
-* excessive platform-channel traffic
-* processing every frame when unnecessary
-
-Only send the minimum required information back to Flutter.
-
-For example:
-
-```text id="cf5y9b"
-{
-  objectId,
-  class,
-  confidence,
-  boundingBox,
-  motionState,
-  obstacleState
-}
-```
-
-rather than sending processed full-size images repeatedly.
+Never run heavy inference on the Flutter UI thread.
 
 ---
 
-# 15. PERFORMANCE
+# 13. OBJECT DETECTION
 
-Target:
+Display actual model results.
 
-**15–30 FPS where hardware allows.**
+For each detected object:
+
+```text
+CLASS
+CONFIDENCE
+BOUNDING BOX
+TRACK ID
+MOTION STATE
+```
+
+Example:
+
+```text
+PERSON 94%
+ID: 03
+MOVING
+```
+
+The numbers must come from actual inference.
+
+---
+
+# 14. SEGMENTATION
+
+Where the selected model supports segmentation, display actual segmentation masks.
+
+Do not display fake masks.
+
+If the final mobile model does not support segmentation:
+
+clearly document the limitation and explain the alternative model/architecture.
+
+---
+
+# 15. OBJECT TRACKING
+
+Implement real tracking.
+
+Preserve the original project's tracking concept.
+
+Support:
+
+* object ID persistence
+* object association
+* feature matching
+* lost-object handling
+* re-identification where practical
+* tracking confidence
+
+---
+
+# 16. ORB FEATURE MATCHING
+
+Implement ORB as the default mobile feature matcher.
+
+Where technically practical, support:
+
+* ORB
+* SIFT
+* SURF
+
+Do not include components that are incompatible with the target license or Android environment.
+
+Document any excluded algorithm and why.
+
+---
+
+# 17. KALMAN FILTER
+
+Implement the Kalman-filter logic.
+
+Track:
+
+```text
+position
+velocity
+prediction
+uncertainty
+timestamp
+```
+
+Use it for actual object-state prediction.
+
+Do not fabricate trajectories.
+
+---
+
+# 18. MOTION DETECTION
+
+Implement actual motion analysis.
+
+Possible states:
+
+```text
+STATIC
+MOVING
+APPROACHING
+RECEDING
+UNKNOWN
+```
+
+Account for camera movement where practical.
+
+---
+
+# 19. OBSTACLE ANALYSIS
+
+Implement an actual obstacle-analysis layer.
+
+Use available:
+
+* object class
+* object position
+* bounding box
+* apparent size
+* motion
+* trajectory
+* relative depth
+* tracking confidence
+
+Output:
+
+```text
+SAFE
+CAUTION
+WARNING
+DANGER
+```
+
+Do not claim exact physical distance unless the algorithm is properly calibrated.
+
+Use:
+
+**Relative Distance**
+
+when only relative depth is available.
+
+---
+
+# 20. PERFORMANCE OPTIMIZATION
+
+The application must be designed for generic Android hardware.
 
 Implement:
 
-* asynchronous inference
 * frame skipping
-* resolution scaling
-* background processing
-* isolate where appropriate
-* native processing for expensive CV operations
-* GPU acceleration where available
-* NNAPI where supported
-* quantized model where appropriate
+* adaptive resolution
+* asynchronous inference
+* background workers
 * memory reuse
+* reduced image copies
+* native processing
+* hardware acceleration where available
+* NNAPI where appropriate
+* quantization where appropriate
 
-Do not block Flutter rendering.
+Target:
+
+**15–30 FPS depending on device capability.**
+
+Do not fabricate benchmark numbers.
+
+Measure actual performance.
 
 ---
 
-# 16. DEVICE PERFORMANCE MODES
+# 21. DEVICE PERFORMANCE MODES
 
-Provide:
+Implement:
 
 ### PERFORMANCE
 
-Prioritize FPS.
+Maximum responsiveness.
 
 ### BALANCED
 
@@ -500,85 +634,223 @@ Default.
 
 ### QUALITY
 
-Prioritize detection quality.
+Maximum detection quality.
 
-The application should detect device capability and adjust processing appropriately.
+Allow adaptive inference resolution.
 
-Do not make unsupported performance claims.
+Example:
+
+```text
+Low-end phone:
+320 × 320
+
+Mid-range:
+416 × 416
+
+High-end:
+640 × 640
+```
+
+Use actual model-supported input sizes.
+
+Do not use unsupported dimensions.
 
 ---
 
-# 17. FLUTTER UI
+# 22. OFFLINE OPERATION
 
-Use a professional dark AI/robotics interface.
+Core AI functionality must work without internet.
 
-Main screen:
+The following must work offline:
 
-```text id="cr5k4k"
+```text
+Camera
+AI inference
+Object detection
+Tracking
+Motion analysis
+Obstacle analysis
+```
+
+No cloud API should be required.
+
+---
+
+# 23. PRIVACY
+
+Default:
+
+```text
+ON-DEVICE AI: ON
+CLOUD AI: OFF
+FRAME UPLOAD: OFF
+```
+
+Do not upload camera frames.
+
+Do not require user login.
+
+Do not collect unnecessary personal data.
+
+---
+
+# 24. SESLAA BRANDING
+
+Use:
+
+**SESLAA Motion Stack**
+
+Company:
+
+**Narga Engineering Private Limited**
+
+Package:
+
+```text
+com.seslaa.motionstack
+```
+
+Use SESLAA branding throughout the application.
+
+---
+
+# 25. APP ICON
+
+Use the supplied:
+
+```text
+appicon.png
+```
+
+as the official launcher icon.
+
+Generate appropriate Android icon resources.
+
+Do not replace it with a generated icon.
+
+---
+
+# 26. COPYRIGHT
+
+Narga Engineering-owned application code should use:
+
+```text
+© 2026 Narga Engineering Private Limited.
+All rights reserved.
+```
+
+Use the appropriate SESLAA trademark designation.
+
+Do not falsely claim third-party code or models as Narga Engineering property.
+
+---
+
+# 27. THIRD-PARTY LICENSES
+
+Create:
+
+```text
+LICENSE
+NOTICE
+THIRD_PARTY_LICENSES.md
+```
+
+Include applicable licenses for:
+
+* Flutter
+* Dart
+* Android libraries
+* Camera packages
+* TensorFlow Lite
+* ONNX Runtime
+* OpenCV
+* Mask R-CNN
+* third-party models
+* third-party datasets
+* other dependencies
+
+Also create an in-app:
+
+**Open Source Licenses**
+
+screen.
+
+---
+
+# 28. MODEL LICENSE VERIFICATION
+
+Before packaging any model:
+
+verify:
+
+* source
+* owner
+* license
+* commercial-use rights
+* redistribution rights
+* attribution requirements
+
+Do not package a model if its license does not permit the intended use.
+
+Report any unresolved model-license issue.
+
+---
+
+# 29. FLUTTER UI
+
+Create a professional SESLAA AI/robotics interface.
+
+Main screen should show:
+
+```text
 SESLAA MOTION STACK
 
 Camera: REAR
-FPS: 24
-Objects: 5
+FPS: XX
+Objects: XX
 AI: ON-DEVICE
 
-┌─────────────────────────────┐
-│                             │
-│      CAMERA PREVIEW         │
-│                             │
-│  ┌─────────────────────┐    │
-│  │ PERSON 94%          │    │
-│  │ ID: 03              │    │
-│  │ MOVING              │    │
-│  └─────────────────────┘    │
-│                             │
-│       CAR 88%               │
-│       ID: 07                │
-│       APPROACHING           │
-│                             │
-└─────────────────────────────┘
+[ LIVE CAMERA ]
+
+PERSON 94%
+ID: 03
+MOVING
+
+CAR 88%
+ID: 07
+APPROACHING
 
 Motion: ACTIVE
 Obstacle: CAUTION
+```
 
-[ START ] [ CAMERA ] [ SETTINGS ]
+Controls:
+
+```text
+START
+STOP
+CAMERA
+SETTINGS
 ```
 
 ---
 
-# 18. FLUTTER STATE MANAGEMENT
+# 30. SETTINGS
 
-Use a clean state-management architecture.
-
-Choose one appropriate approach such as:
-
-* Riverpod
-* Provider
-* Bloc/Cubit
-
-Prefer a lightweight and maintainable solution.
-
-Do not add multiple state-management frameworks.
-
----
-
-# 19. SETTINGS
-
-Provide:
+Include:
 
 * confidence threshold
 * motion sensitivity
-* camera
 * performance mode
 * inference resolution
+* camera
 * tracking ON/OFF
 * segmentation ON/OFF
-* FPS display
+* FPS
 * snapshot
 * video recording
 * privacy
-* local processing
-* open-source licenses
+* licenses
 * about
 
 Default confidence:
@@ -587,463 +859,84 @@ Default confidence:
 
 ---
 
-# 20. PRIVACY
+# 31. TEST VIDEO MODE
 
-All core camera processing must be local.
+Implement a developer mode that can process a local video.
 
-Default:
+This allows comparison:
 
-```text id="mwm0b5"
-ON-DEVICE AI: ON
-CLOUD PROCESSING: OFF
-FRAME UPLOAD: OFF
-```
-
-No cloud server is required for normal operation.
-
-Do not upload camera frames.
-
-Do not collect unnecessary personal information.
-
-Only request necessary Android permissions.
-
----
-
-# 21. NETWORK
-
-Core application functionality must work offline.
-
-Do not require:
-
-* login
-* cloud API
-* internet
-* external server
-
-for object detection and motion analysis.
-
-If networking is implemented in the future, isolate it as an optional module.
-
----
-
-# 22. APP ICON
-
-Use the supplied:
-
-`appicon.png`
-
-as the official SESLAA Motion Stack application icon.
-
-Generate the required Android launcher/adaptive icon resources from this file.
-
-Do not create a different icon.
-
-Do not replace the supplied logo.
-
----
-
-# 23. BRANDING
-
-Use:
-
-**SESLAA Motion Stack**
-
-throughout the application.
-
-Company:
-
-**Narga Engineering Private Limited**
-
-Update:
-
-* app name
-* splash screen
-* launcher label
-* About page
-* settings
-* documentation
-* package metadata
-* application metadata
-
-Do not change third-party attribution.
-
----
-
-# 24. PACKAGE NAME
-
-Use:
-
-```text id="8q6jso"
-com.seslaa.motionstack
-```
-
-Use this consistently across:
-
-* Flutter
-* Android
-* Gradle
-* AndroidManifest
-* Kotlin
-* tests
-
----
-
-# 25. COPYRIGHT
-
-Application code created specifically for Narga Engineering should contain:
-
-```text id="o3zj5k"
-Copyright © 2026 Narga Engineering Private Limited.
-All rights reserved.
-```
-
-Use:
-
-```text id="y44dqe"
-SESLAA™
-```
-
-or the legally applicable SESLAA trademark designation.
-
-Do not claim ownership of third-party libraries, models or frameworks.
-
----
-
-# 26. THIRD-PARTY LICENSES
-
-Create:
-
-```text id="v9cr7m"
-LICENSE
-NOTICE
-THIRD_PARTY_LICENSES.md
-```
-
-Identify licenses for:
-
-* Flutter
-* Dart
-* Android libraries
-* Camera libraries
-* TensorFlow Lite
-* ONNX Runtime
-* OpenCV
-* Mask R-CNN
-* Python-derived code
-* third-party models
-* third-party datasets
-* other dependencies
-
-Preserve mandatory copyright and license notices.
-
-Do not replace third-party ownership with Narga Engineering ownership.
-
----
-
-# 27. IN-APP LICENSE SCREEN
-
-Create:
-
-**Settings → Open Source Licenses**
-
-Display:
-
-* component name
-* version
-* copyright
-* license
-* license text where required
-
-Include Narga Engineering's application copyright separately from third-party licenses.
-
----
-
-# 28. MODEL LICENSE VERIFICATION
-
-Before packaging any AI model:
-
-Determine:
-
-* model source
-* model owner
-* model license
-* commercial-use permission
-* redistribution permission
-* attribution requirements
-
-If the model cannot legally be redistributed inside a commercial APK:
-
-Do not package it.
-
-Instead document the issue and provide a compliant integration mechanism.
-
----
-
-# 29. SOURCE CODE OWNERSHIP
-
-New SESLAA-specific Flutter/Dart/Kotlin/C++ code developed for this project should be identified as Narga Engineering code where appropriate.
-
-Do not modify third-party source headers to falsely claim ownership.
-
-Maintain clear separation between:
-
-```text id="q9l4u2"
-Narga Engineering Code
-        +
-Third-Party Components
-        +
-Third-Party Models
-```
-
----
-
-# 30. OFFLINE DEMO MODE
-
-Implement a developer/test mode.
-
-Allow a local video to be processed through the same vision pipeline.
-
-Purpose:
-
-Compare:
-
-```text id="z9em5b"
+```text
 Python Reference
         VS
-Flutter Android
+Android Flutter
 ```
 
 Compare:
 
-* objects
+* object detection
 * segmentation
 * tracking
-* IDs
 * motion
 * obstacle state
 * FPS
 
 ---
 
-# 31. PYTHON REFERENCE VALIDATION
+# 32. TEST ON ACTUAL ANDROID DEVICE
 
-Create:
+If an Android device is connected to the development environment:
 
-`VALIDATION_REPORT.md`
+detect it using:
 
-Record:
-
-### Python
-
-* model
-* input
-* detection
-* tracking
-* FPS
-
-### Flutter Android
-
-* model
-* input
-* detection
-* tracking
-* FPS
-
-### Difference
-
-* accuracy
-* latency
-* model differences
-* tracking differences
-* known limitations
-
-Do not claim equivalence without testing.
-
----
-
-# 32. TESTING
-
-Implement Flutter/Dart tests for:
-
-* detection result parsing
-* confidence threshold
-* object state
-* tracking state
-* motion state
-* obstacle classification
-* settings
-* application state
-
-Implement Android/native tests where required for:
-
-* camera
-* inference
-* OpenCV
-* native bridge
-* lifecycle
-
----
-
-# 33. SECURITY
-
-Do not store sensitive camera data unnecessarily.
-
-Do not hard-code:
-
-* passwords
-* API keys
-* tokens
-* private certificates
-
-If snapshots/videos are supported:
-
-* save only when requested
-* allow deletion
-* use appropriate Android storage mechanisms
-
----
-
-# 34. ERROR HANDLING
-
-Handle:
-
-* camera permission denied
-* camera unavailable
-* model missing
-* model load failure
-* unsupported device
-* insufficient memory
-* inference failure
-* invalid frame
-* native bridge failure
-
-The application must not crash.
-
-Display meaningful errors.
-
-Example:
-
-```text id="g6n1df"
-AI MODEL ERROR
-
-The detection model could not be loaded.
-Please verify the model package.
+```bash
+flutter devices
 ```
 
-Never show fake detections.
+Install the application:
 
----
-
-# 35. FLUTTER PROJECT STRUCTURE
-
-Expected structure:
-
-```text id="j94rj6"
-seslaa_motion_stack/
-│
-├── android/
-├── assets/
-│   ├── models/
-│   ├── images/
-│   └── licenses/
-│
-├── lib/
-│   ├── app/
-│   ├── camera/
-│   ├── detection/
-│   ├── segmentation/
-│   ├── tracking/
-│   ├── matching/
-│   ├── kalman/
-│   ├── motion/
-│   ├── obstacle/
-│   ├── inference/
-│   ├── privacy/
-│   ├── settings/
-│   ├── licenses/
-│   └── ui/
-│
-├── test/
-│
-├── LICENSE
-├── NOTICE
-├── THIRD_PARTY_LICENSES.md
-├── README.md
-├── ARCHITECTURE.md
-├── ANDROID_MIGRATION_PLAN.md
-└── VALIDATION_REPORT.md
+```bash
+flutter install
 ```
 
-Adapt this structure if the actual implementation requires a better organization.
+or:
+
+```bash
+adb install <apk>
+```
+
+Run the application.
+
+Test:
+
+* camera permission
+* camera preview
+* AI model loading
+* real-time detection
+* tracking
+* motion
+* obstacle analysis
+* orientation
+* camera switching
+* app lifecycle
+
+If no physical phone is connected, complete all possible build/emulator tests and clearly report that physical-device validation remains pending.
+
+Do not claim physical-phone testing if it was not performed.
 
 ---
 
-# 36. FLUTTER DEPENDENCIES
-
-Keep dependencies minimal.
-
-Potential dependencies may include:
-
-* camera
-* flutter_riverpod / provider / bloc
-* path_provider
-* permission_handler
-* tflite_flutter or appropriate inference package
-* ffi where required
-
-Do not add packages merely for convenience.
-
-Verify each dependency's:
-
-* version
-* Android compatibility
-* license
-* maintenance status
-
----
-
-# 37. BUILD ENVIRONMENT
-
-Before building:
+# 33. BUILD VALIDATION
 
 Run:
 
 ```bash
-flutter doctor -v
-```
-
-Verify:
-
-* Flutter
-* Dart
-* Android SDK
-* Android SDK Platform
-* Android build tools
-* Java
-* Gradle
-* Android Studio
-
-Then:
-
-```bash
+flutter clean
 flutter pub get
-```
-
-Run:
-
-```bash
 flutter analyze
-```
-
-Fix all relevant errors.
-
-Run tests:
-
-```bash
 flutter test
 ```
 
-Then build:
+Then:
 
 ```bash
 flutter build apk --debug
@@ -1055,211 +948,182 @@ Then:
 flutter build apk --release
 ```
 
+Fix every build error that can reasonably be fixed.
+
+Do not stop because a dependency is inconvenient.
+
 ---
 
-# 38. APK OUTPUT
+# 34. APK
 
 Generate:
 
-```text id="v3fj6s"
-build/app/outputs/flutter-apk/app-debug.apk
+```text
+SESLAA-Motion-Stack-debug.apk
 ```
 
 and:
 
-```text id="wxj4w8"
-build/app/outputs/flutter-apk/app-release.apk
-```
-
-Rename/copy the final artifacts where appropriate to:
-
-```text id="7c2ypd"
-SESLAA-Motion-Stack-debug.apk
+```text
 SESLAA-Motion-Stack-release.apk
 ```
 
-Do not claim the release APK is production-signed unless an actual Narga Engineering release keystore is configured.
+Use the actual generated APK.
+
+Do not fabricate APK files.
+
+Do not claim production signing without a real Narga Engineering release keystore.
 
 ---
 
-# 39. RELEASE SIGNING
+# 35. DOCUMENTATION
 
-If no release keystore is supplied:
+Create/update:
 
-Do NOT:
-
-* invent a keystore
-* invent passwords
-* claim production signing
-
-Instead:
-
-1. Build the release APK.
-2. Clearly report signing status.
-3. Provide instructions for configuring Narga Engineering's actual release keystore.
-
----
-
-# 40. README
-
-Create:
-
-`README.md`
-
-Include:
-
-* SESLAA Motion Stack overview
-* Flutter architecture
-* Python → Flutter migration
-* AI model
-* inference engine
-* camera pipeline
-* object detection
-* segmentation
-* tracking
-* Kalman filter
-* motion detection
-* obstacle analysis
-* privacy
-* licenses
-* build instructions
-* APK installation
-* Android requirements
-* performance
-* limitations
-* troubleshooting
-
----
-
-# 41. ARCHITECTURE DOCUMENT
-
-Create:
-
-`ARCHITECTURE.md`
-
-Explain:
-
-```text id="e4g5n9"
-Flutter UI
-     ↓
-Application Layer
-     ↓
-Vision Bridge
-     ↓
-Native / C++ / AI Runtime
-     ↓
-Camera
-     ↓
-Inference
-     ↓
-Tracking
-     ↓
-Motion
-     ↓
-Obstacle Analysis
+```text
+README.md
+ANDROID_MIGRATION_PLAN.md
+ARCHITECTURE.md
+BUILD_ENVIRONMENT.md
+VALIDATION_REPORT.md
+THIRD_PARTY_LICENSES.md
 ```
-
-Explain why each component is Flutter, Dart, Kotlin, C++, or native AI runtime.
-
----
-
-# 42. MIGRATION DOCUMENT
-
-Create:
-
-`ANDROID_MIGRATION_PLAN.md`
 
 Document:
 
-* Python component
-* original function
-* Flutter/native equivalent
-* migration status
-* technical limitations
-* performance considerations
-
-Example:
-
-```text id="r2i7d9"
-Python Mask R-CNN
-        ↓
-TensorFlow Lite
-        ↓
-Native Android inference
-        ↓
-Flutter result bridge
-```
-
----
-
-# 43. DO NOT FABRICATE
-
-Never fabricate:
-
-* detection
-* confidence
-* FPS
-* depth
-* distance
-* tracking
-* accuracy
-* model weights
+* Flutter version
+* Dart version
+* Java version
+* Gradle version
+* Android Gradle Plugin
+* compile SDK
+* target SDK
+* minimum SDK
+* NDK
+* inference runtime
+* AI model
+* model conversion
 * licenses
-* copyright
-* ownership
-* benchmark results
-
-If something cannot be verified:
-
-**Report it clearly.**
+* device testing
+* performance
+* limitations
 
 ---
 
-# 44. FINAL VALIDATION
+# 36. DO NOT ACCEPT THESE AS FINAL SOLUTIONS
 
-Before declaring completion:
+Do NOT finish the project with:
 
-```text id="9nwhn7"
-[ ] Python repository inspected
-[ ] Python architecture documented
-[ ] Flutter project created
-[ ] Dart architecture implemented
-[ ] Android implementation integrated
-[ ] Camera working
-[ ] Generic Android camera supported
-[ ] AI model integrated
-[ ] Object detection working
-[ ] Segmentation working/equivalent
-[ ] Feature matching working
-[ ] Object tracking working
-[ ] Kalman filter working
-[ ] Motion detection working
-[ ] Obstacle analysis working
-[ ] Confidence scores working
-[ ] Tracking IDs working
-[ ] Offline mode working
-[ ] Privacy implemented
-[ ] SESLAA branding complete
-[ ] Narga Engineering ownership notices added
-[ ] appicon.png integrated
-[ ] Third-party licenses documented
-[ ] Model licenses verified
-[ ] In-app license screen implemented
-[ ] flutter analyze passes
-[ ] flutter test passes
-[ ] debug APK generated
-[ ] release APK generated
-[ ] signing status documented
-[ ] README completed
-[ ] architecture documented
-[ ] validation report completed
+```text
+"Native plugin incompatible."
+```
+
+without attempting to resolve it.
+
+Do NOT finish with:
+
+```text
+"TensorFlow pipeline not implemented."
+```
+
+if a compatible runtime can be installed or integrated.
+
+Do NOT finish with:
+
+```text
+"Object detection placeholder."
+```
+
+Do NOT finish with:
+
+```text
+"Mock camera."
+```
+
+Do NOT finish with:
+
+```text
+"Demo UI only."
+```
+
+Do NOT finish with:
+
+```text
+"Model integration can be added later."
+```
+
+The goal is a **working implementation now**.
+
+---
+
+# 37. IF THE ORIGINAL MODEL CANNOT RUN ON PHONE
+
+If the original Mask R-CNN implementation is technically too heavy or incompatible:
+
+Do not abandon the project.
+
+Instead:
+
+1. Measure the original model.
+2. Determine the exact limitation.
+3. Select an Android-compatible model.
+4. Convert/deploy it.
+5. Implement actual inference.
+6. Preserve object detection functionality.
+7. Preserve tracking.
+8. Preserve motion analysis.
+9. Preserve obstacle analysis.
+10. Document the model substitution.
+
+The application must still provide real on-device AI.
+
+---
+
+# 38. FINAL COMPLETION CRITERIA
+
+The project is complete only when:
+
+```text
+[✓] instructions.md followed
+[✓] Existing Python code inspected
+[✓] Flutter project implemented
+[✓] Android build environment resolved
+[✓] Missing SDK/build dependencies installed where possible
+[✓] Gradle compatibility resolved
+[✓] Camera working
+[✓] Generic Android phone supported
+[✓] Real AI model integrated
+[✓] Real on-device inference working
+[✓] Object detection working
+[✓] Segmentation working/equivalent
+[✓] ORB/feature matching implemented
+[✓] Object tracking working
+[✓] Kalman filtering working
+[✓] Motion detection working
+[✓] Obstacle analysis working
+[✓] Confidence values real
+[✓] Tracking IDs real
+[✓] Offline processing working
+[✓] Privacy implemented
+[✓] SESLAA branding applied
+[✓] appicon.png integrated
+[✓] Narga Engineering copyright applied
+[✓] Third-party licenses preserved
+[✓] Model licenses verified
+[✓] In-app license screen implemented
+[✓] flutter analyze completed
+[✓] flutter tests completed
+[✓] Debug APK generated
+[✓] Release APK generated
+[✓] Physical device tested if available
+[✓] Validation report created
 ```
 
 ---
 
-# 45. FINAL OUTPUT
+# 39. FINAL REPORT
 
-At completion, report:
+At the end, provide a concise but complete report:
 
 ## Application
 
@@ -1277,91 +1141,93 @@ At completion, report:
 
 `com.seslaa.motionstack`
 
-## AI
+## AI Pipeline
 
-Report:
+State exactly:
 
-* original Python model
-* Android model
-* inference engine
-* conversion method
-* model license
+* model used
+* model format
+* inference runtime
+* model conversion method
+* input resolution
+* quantization
+* CPU/GPU/NNAPI usage
 
 ## Computer Vision
 
-Report:
+State exactly which are implemented:
 
 * object detection
 * segmentation
-* ORB/SIFT/SURF
+* ORB
+* SIFT
+* SURF
 * feature matching
 * tracking
 * Kalman filter
-* motion analysis
+* motion detection
 * obstacle analysis
 
-## Build
+## Build Environment
+
+Report actual versions.
+
+## Device Test
 
 Report:
 
-* Flutter version
-* Dart version
-* Android SDK
-* compile SDK
-* target SDK
-* minimum SDK
+* device model
+* Android version
+* APK version
+* measured FPS
+* inference latency
+* memory usage if measured
+* issues
 
 ## APK
 
-Report the actual generated paths:
+Report the exact generated paths:
 
-```text id="i0q6aa"
-Debug:
+```text
+Debug APK:
 <actual path>
 
-Release:
+Release APK:
 <actual path>
 ```
 
-## Testing
+## Remaining Issues
 
-Report:
+Only list genuine remaining issues.
 
-* `flutter analyze`
-* `flutter test`
-* APK build result
-* device testing
-* FPS
-* known issues
-
-## Licensing
-
-Report:
-
-* Narga Engineering-owned code
-* third-party libraries
-* third-party models
-* licenses
-* attribution requirements
+Do not hide limitations.
 
 ---
 
-# 46. CRITICAL RULE
+# 40. FINAL INSTRUCTION
 
-The final product must be a **real Flutter Android implementation**, not a UI mockup.
+**DO THE WORK, DO NOT JUST DESCRIBE THE WORK.**
 
-The Flutter layer is responsible for the application/UI.
+Read `instructions.md`.
 
-The native/mobile vision layer is responsible for computationally intensive computer vision and AI inference.
+Inspect the existing Python repository.
 
-The existing Python repository remains the algorithmic reference.
+Resolve the Flutter/Android/Gradle/SDK incompatibilities.
 
-Follow:
+Install required components when possible.
 
-**ANALYZE → PORT → OPTIMIZE → BUILD → TEST → VALIDATE → GENERATE APK**
+Implement the actual on-device AI/vision pipeline.
 
-The final application is:
+Build the Flutter Android application.
 
-# SESLAA Motion Stack
+Test it.
 
-**© 2026 Narga Engineering Private Limited. All rights reserved.**
+Generate the APK.
+
+Use `appicon.png`.
+
+Apply Narga Engineering ownership correctly.
+
+Preserve all third-party licenses.
+
+The final result must be a **real, installable SESLAA Motion Stack Android application capable of running the computer-vision pipeline on a generic Android smartphone.**

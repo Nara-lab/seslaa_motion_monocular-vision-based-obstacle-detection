@@ -1,0 +1,10 @@
+Copyright © 2026 Narga Engineering Private Limited.
+All rights reserved.
+
+This project contains original SESLAA Motion Stack source code and software assets created for Narga Engineering Private Limited. The project also contains third-party code, libraries, and reference materials from the Flutter SDK, Android tooling, and the original Python monocular vision implementation used as a technical reference.
+
+The SESLAA-specific source files in this repository remain subject to the copyright of Narga Engineering Private Limited unless otherwise noted.
+
+Third-party components remain the property of their original owners and are governed by their respective licenses. No third-party ownership is reassigned or implied by this repository.
+
+This repository is distributed for evaluation and development use. Redistribution of binary or source artifacts must comply with the applicable third-party and model licenses before commercial use or public distribution.

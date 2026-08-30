@@ -1,4 +1,4 @@
-package com.seslaa.motionstack.seslaa_motion_calibrator
+package com.seslaa.motionstack
 
 import io.flutter.embedding.android.FlutterActivity
 

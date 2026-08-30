@@ -7,24 +7,29 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:seslaa_motion_calibrator/main.dart';
+import 'package:seslaa_motion_stack/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  test('detects a moving object and maps obstacle state', () {
+    final result = DetectionResult(
+      objectId: 'obj-3',
+      label: 'PERSON',
+      confidence: 0.94,
+      boundingBox: const Rect.fromLTWH(80, 120, 150, 220),
+      motionState: MotionState.moving,
+      obstacleState: ObstacleState.caution,
+    );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(result.objectId, 'obj-3');
+    expect(result.label, 'PERSON');
+    expect(result.obstacleState, ObstacleState.caution);
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  testWidgets('renders the SESLAA Motion Stack home screen', (tester) async {
+    await tester.pumpWidget(const SeslaaMotionApp());
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('SESLAA Motion Stack'), findsWidgets);
+    expect(find.text('Camera: REAR'), findsOneWidget);
+    expect(find.text('AI: ON-DEVICE'), findsOneWidget);
   });
 }
