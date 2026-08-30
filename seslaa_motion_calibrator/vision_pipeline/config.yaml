@@ -1,0 +1,10 @@
+confidence_threshold: 0.45
+max_missed_frames: 8
+min_iou: 0.12
+event_cooldown_seconds: 2.0
+path_width_ratio: 0.36
+critical_ttc_seconds: 1.2
+warning_ttc_seconds: 2.5
+caution_ttc_seconds: 4.0
+min_flow_points: 12
+focal_length_px: 0.0
