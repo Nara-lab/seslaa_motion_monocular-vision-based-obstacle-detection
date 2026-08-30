@@ -114,8 +114,8 @@ def get_frames_from_video(path_to_video, from_sec=0, to_sec=None, undistort=Fals
     fullpath = os.path.abspath(path_to_video)
     video = VideoFileClip(fullpath, audio=False).subclip(from_sec, to_sec)
     for frame in video.iter_frames():
-        # We have to switch the order of channels as opencv has a different order as they are coming from the camera
-        color_corrected_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        # MoviePy already returns RGB frames, which is the format expected by Mask R-CNN.
+        color_corrected_frame = frame
         if undistort:
             color_corrected_frame = camera_calibration.undistort(color_corrected_frame)
         yield color_corrected_frame
@@ -135,7 +135,7 @@ def get_frames_from_image_directory(path, image_types=None, from_image=0, to_ima
         image_paths.extend(glob.glob(os.path.join(full_path_to_dir, "*." + image_type)))
     image_paths.sort()
     for image_path in image_paths[from_image:to_image]:
-        image = cv2.imread(image_path)
+        image = cv2.cvtColor(cv2.imread(image_path), cv2.COLOR_BGR2RGB)
         if undistort:
             image = camera_calibration.undistort(image)
         yield image

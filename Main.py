@@ -77,6 +77,7 @@ if __name__ == "__main__":
         nargs=2,
         metavar=("x", "y"),
         type=int,
+        default=Constants.INPUT_DIMENSIONS,
         help="Input dimensions for video or image series"
     )
     parser.add_argument(

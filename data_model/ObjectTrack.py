@@ -120,8 +120,10 @@ class ObjectTrack:
             last_n_occurrences_filtered = [x for x in last_n_occurrences if x is not None]  # Filtering for non None values
             last_translations = list(map(lambda x: x.translation_to_last_instance, last_n_occurrences_filtered))  # mapping to positions of this object
             last_translations_filtered = [x for x in last_translations if x is not None]  # Filtering for non None values
+            if not last_translations_filtered:
+                return None
             cumulative_translation = tuple(map(sum, zip(*last_translations_filtered)))  # Adding up all the differences
-            smoothed_translation = tuple(map(lambda x: x / (len(last_n_occurrences) - 1), cumulative_translation))  # dividing by number of instances / frames since first appearance
+            smoothed_translation = tuple(map(lambda x: x / len(last_translations_filtered), cumulative_translation))  # average only valid observations
             translation_in_meter_per_second = tuple(map(lambda x: x * INPUT_FPS, smoothed_translation))  # Multiplying by fps to get m/s
             return translation_in_meter_per_second
 
