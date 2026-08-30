@@ -45,6 +45,7 @@ dependencies:
   camera: ^0.12.0+2
   google_mlkit_object_detection: ^0.16.0
   flutter_launcher_icons: ^0.14.4
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +65,7 @@ dev_dependencies:
 flutter:
 
   assets:
+    - appIcon.png
     - assets/models/README.md
     - assets/licenses/README.md
 
