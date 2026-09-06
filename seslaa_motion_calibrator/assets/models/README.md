@@ -1,7 +1,8 @@
 # Open-source model assets
 
-The Python pipeline uses `yolo11n.onnx` through the Ultralytics runtime. It is
-the official YOLO11 nano COCO detector and provides confidence-scored boxes for
+The app and Python pipeline use `yolo11n.onnx` through ONNX Runtime. It is the
+official YOLO11 nano COCO detector exported with ONNX IR 8 and opset 17 for
+mobile runtime compatibility, and provides confidence-scored boxes for
 person, bicycle, car, motorcycle, bus, truck, airplane, bird, and animal
 species where those classes are visible. Its ONNX graph should be loaded by
 Ultralytics; the OpenCV DNN importer is not compatible with this export's
