@@ -1,4 +1,5 @@
 import unittest
+from pathlib import Path
 
 from vision_pipeline.config import PipelineConfig
 from vision_pipeline.models import Detection
@@ -6,9 +7,25 @@ from vision_pipeline.events import EventEngine
 from vision_pipeline.evaluate import detection_metrics
 from vision_pipeline.risk import assess_track, estimate_depth
 from vision_pipeline.tracking import IoUTracker
+from vision_pipeline.taxonomy import canonicalize
 
 
 class PipelineTests(unittest.TestCase):
+    def test_yaml_model_path_is_resolved_from_project_root(self):
+        config = PipelineConfig.from_yaml(Path(__file__).with_name("config.yaml"))
+        self.assertTrue(config.model_path.is_absolute())
+        self.assertTrue(config.model_path.name == "yolo11n.onnx")
+
+    def test_taxonomy_normalizes_labels_and_maps_aliases(self):
+        self.assertEqual(canonicalize("fashion"), "fashion")
+        self.assertEqual(canonicalize("location"), "location")
+        self.assertEqual(canonicalize("bike"), "bicycle")
+        self.assertEqual(canonicalize("pedestrian"), "person")
+        self.assertEqual(canonicalize("birds"), "bird")
+        self.assertEqual(canonicalize("animals"), "animal")
+        self.assertEqual(canonicalize("trees"), "tree")
+        self.assertEqual(canonicalize("buildings"), "building")
+
     def test_iou_tracker_preserves_id(self):
         tracker = IoUTracker()
         first = tracker.update([Detection((10, 10, 50, 100), "person", 0.9)])

@@ -9,11 +9,22 @@ from .taxonomy import canonicalize
 
 
 class OpenCVDetector:
-    """CPU-safe detector with an optional ONNX backend and HOG baseline."""
+    """YOLO11 detector with an OpenCV/HOG fallback."""
 
     def __init__(self, model_path: Path | None = None, labels_path: Path | None = None, confidence_threshold: float = 0.45):
         self.confidence_threshold = confidence_threshold
-        self.net = cv2.dnn.readNetFromONNX(str(model_path)) if model_path else None
+        self.yolo = None
+        self.net = None
+        if model_path and "yolo11" in Path(model_path).stem.lower():
+            try:
+                from ultralytics import YOLO
+            except ImportError as error:
+                raise RuntimeError(
+                    "YOLO11n requires ultralytics; install vision_requirements.txt"
+                ) from error
+            self.yolo = YOLO(str(model_path))
+        elif model_path:
+            self.net = cv2.dnn.readNetFromONNX(str(model_path))
         self.labels = []
         if labels_path and Path(labels_path).exists():
             self.labels = Path(labels_path).read_text(encoding="utf-8").splitlines()
@@ -21,6 +32,8 @@ class OpenCVDetector:
         self.hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 
     def detect(self, frame: np.ndarray) -> List[Detection]:
+        if self.yolo is not None:
+            return self._detect_yolo(frame)
         if self.net is not None:
             return self._detect_dnn(frame)
         boxes, weights = self.hog.detectMultiScale(frame, winStride=(8, 8), padding=(8, 8), scale=1.05)
@@ -29,6 +42,34 @@ class OpenCVDetector:
             for (x, y, width, height), weight in zip(boxes, weights)
             if float(weight) >= self.confidence_threshold
         ]
+
+    def _detect_yolo(self, frame: np.ndarray) -> List[Detection]:
+        results = self.yolo.predict(
+            source=frame,
+            imgsz=640,
+            conf=self.confidence_threshold,
+            device="cpu",
+            verbose=False,
+        )
+        detections = []
+        for result in results:
+            names = result.names
+            for box, confidence, class_id in zip(
+                result.boxes.xyxy.cpu().tolist(),
+                result.boxes.conf.cpu().tolist(),
+                result.boxes.cls.cpu().tolist(),
+            ):
+                label = canonicalize(names[int(class_id)])
+                if label is None:
+                    continue
+                detections.append(
+                    Detection(
+                        tuple(int(value) for value in box),
+                        label,
+                        float(confidence),
+                    )
+                )
+        return detections
 
     def _detect_dnn(self, frame: np.ndarray) -> List[Detection]:
         height, width = frame.shape[:2]

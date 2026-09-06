@@ -1,4 +1,5 @@
 confidence_threshold: 0.45
+model_path: assets/models/yolo11n.onnx
 max_missed_frames: 8
 min_confirmed_frames: 2
 min_iou: 0.12

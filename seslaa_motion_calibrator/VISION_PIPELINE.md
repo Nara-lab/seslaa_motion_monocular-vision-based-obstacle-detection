@@ -1,11 +1,11 @@
 # Monocular Vision Pipeline
 
-The runnable pipeline is `vision_pipeline`. It uses OpenCV HOG as a CPU-safe baseline and accepts an optional ONNX model through `PipelineConfig.model_path`. This keeps the system executable without silently downloading a model; a YOLO-family nano model exported to ONNX is the recommended production detector, while the existing Mask R-CNN model remains the research-quality reference.
+The runnable pipeline is `vision_pipeline`. It uses YOLO11n through the Ultralytics runtime by default (`assets/models/yolo11n.onnx`) and keeps OpenCV HOG as a deliberate fallback when no model is configured. The existing Mask R-CNN model remains the research-quality reference.
 
 ## Run
 
 ```powershell
-python -m pip install opencv-python numpy pyyaml
+python -m pip install -r vision_requirements.txt
 python -m vision_pipeline.cli 0 --focal-length 720 --output export/annotated.mp4
 python -m vision_pipeline.cli data/video/example.mp4 --config vision_pipeline/config.yaml
 ```

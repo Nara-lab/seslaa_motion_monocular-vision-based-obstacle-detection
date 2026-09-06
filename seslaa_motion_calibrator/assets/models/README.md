@@ -1,5 +1,12 @@
 # Open-source model assets
 
+The Python pipeline uses `yolo11n.onnx` through the Ultralytics runtime. It is
+the official YOLO11 nano COCO detector and provides confidence-scored boxes for
+person, bicycle, car, motorcycle, bus, truck, airplane, bird, and animal
+species where those classes are visible. Its ONNX graph should be loaded by
+Ultralytics; the OpenCV DNN importer is not compatible with this export's
+dynamic graph shapes.
+
 The app bundles `efficientdet_lite0_detection_metadata_1.tflite`, an EfficientDet
 Lite0 model with TensorFlow Lite Task Library object-detection metadata. The
 metadata supplies COCO-compatible labels such as car, motorcycle, bus, truck,
