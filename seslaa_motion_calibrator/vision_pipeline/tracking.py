@@ -26,6 +26,13 @@ class Track:
     depth_m: float | None = None
     ttc_s: float | None = None
     risk: str = "SAFE"
+    confirmed_frames: int = 1
+    min_confirmed_frames: int = 2
+    speed_mps: float | None = None
+
+    @property
+    def confirmed(self):
+        return self.confirmed_frames >= self.min_confirmed_frames
 
     @property
     def center(self):
@@ -33,9 +40,10 @@ class Track:
 
 
 class IoUTracker:
-    def __init__(self, min_iou=0.12, max_missed_frames=8):
+    def __init__(self, min_iou=0.12, max_missed_frames=8, min_confirmed_frames=2):
         self.min_iou = min_iou
         self.max_missed_frames = max_missed_frames
+        self.min_confirmed_frames = min_confirmed_frames
         self.next_id = 1
         self.tracks: dict[int, Track] = {}
 
@@ -50,14 +58,21 @@ class IoUTracker:
             track.previous_box = track.box
             track.box = detections[index].box
             track.label = detections[index].label
-            track.confidence = detections[index].confidence
+            track.confidence = track.confidence * 0.35 + detections[index].confidence * 0.65
+            track.confirmed_frames += 1
             track.missed_frames = 0
             track.velocity_px_per_frame = self._velocity(track.previous_box, track.box)
             matched.add(track_id)
             unmatched.remove(index)
         for index in unmatched:
             detection = detections[index]
-            self.tracks[self.next_id] = Track(self.next_id, detection.label, detection.box, detection.confidence)
+            self.tracks[self.next_id] = Track(
+                self.next_id,
+                detection.label,
+                detection.box,
+                detection.confidence,
+                min_confirmed_frames=self.min_confirmed_frames,
+            )
             self.next_id += 1
         for track_id, track in list(self.tracks.items()):
             if track_id not in matched and track.missed_frames == 0 and track.previous_box is not None:

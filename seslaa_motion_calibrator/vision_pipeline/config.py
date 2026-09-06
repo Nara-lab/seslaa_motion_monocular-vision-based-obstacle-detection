@@ -7,6 +7,7 @@ from typing import Dict
 class PipelineConfig:
     confidence_threshold: float = 0.45
     max_missed_frames: int = 8
+    min_confirmed_frames: int = 2
     min_iou: float = 0.12
     event_cooldown_seconds: float = 2.0
     path_width_ratio: float = 0.36
@@ -15,12 +16,10 @@ class PipelineConfig:
     caution_ttc_seconds: float = 4.0
     min_flow_points: int = 12
     known_object_heights: Dict[str, float] = field(default_factory=lambda: {
-        "person": 1.70,
-        "car": 1.50,
-        "truck": 2.50,
-        "bus": 3.00,
-        "motorcycle": 1.30,
-        "bicycle": 1.30,
+        "person": 1.70, "car": 1.50, "truck": 2.50, "bus": 3.00,
+        "motorcycle": 1.30, "bicycle": 1.30, "aircraft": 3.00,
+        "animal": 0.80, "tree": 4.00, "building": 8.00,
+        "traffic sign": 1.20,
     })
     focal_length_px: float = 0.0
     model_path: Path | None = None

@@ -5,6 +5,7 @@ import cv2
 import numpy as np
 
 from .models import Detection
+from .taxonomy import canonicalize
 
 
 class OpenCVDetector:
@@ -38,13 +39,16 @@ class OpenCVDetector:
         for row in np.reshape(output, (-1, output.shape[-1])):
             if row.shape[0] < 6:
                 continue
+            objectness = float(row[4])
             scores = row[5:]
             class_id = int(np.argmax(scores))
-            confidence = float(scores[class_id])
+            confidence = objectness * float(scores[class_id])
             if confidence < self.confidence_threshold:
                 continue
             center_x, center_y, box_width, box_height = row[:4] * [width, height, width, height]
             box = (int(center_x - box_width / 2), int(center_y - box_height / 2), int(center_x + box_width / 2), int(center_y + box_height / 2))
-            label = self.labels[class_id] if class_id < len(self.labels) else f"class-{class_id}"
-            detections.append(Detection(box, label, confidence))
+            raw_label = self.labels[class_id] if class_id < len(self.labels) else f"class-{class_id}"
+            label = canonicalize(raw_label)
+            if label is not None:
+                detections.append(Detection(box, label, confidence))
         return detections

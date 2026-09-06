@@ -11,6 +11,11 @@ def estimate_depth(track: Track, config: PipelineConfig) -> float | None:
 
 
 def assess_track(track: Track, previous_depth: float | None, frame_rate: float, frame_width: int, config: PipelineConfig):
+    track.speed_mps = (
+        abs(previous_depth - track.depth_m) * frame_rate
+        if track.depth_m is not None and previous_depth is not None and frame_rate > 0
+        else None
+    )
     if track.depth_m is None or previous_depth is None or frame_rate <= 0:
         track.ttc_s = None
     else:

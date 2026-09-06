@@ -22,14 +22,18 @@ class MonocularVisionPipeline:
         self.config = config or PipelineConfig()
         self.fps = fps
         self.detector = OpenCVDetector(self.config.model_path, self.config.labels_path, self.config.confidence_threshold)
-        self.tracker = IoUTracker(self.config.min_iou, self.config.max_missed_frames)
+        self.tracker = IoUTracker(
+            self.config.min_iou,
+            self.config.max_missed_frames,
+            self.config.min_confirmed_frames,
+        )
         self.flow = OpticalFlowEstimator(self.config.min_flow_points)
         self.events = EventEngine(self.config.event_cooldown_seconds)
         self.previous_depth: dict[int, float] = {}
 
     def process(self, frame) -> FrameResult:
         camera_motion = self.flow.update(frame)
-        tracks = self.tracker.update(self.detector.detect(frame))
+        tracks = [track for track in self.tracker.update(self.detector.detect(frame)) if track.confirmed]
         for track in tracks:
             prior = self.previous_depth.get(track.track_id)
             track.depth_m = estimate_depth(track, self.config)
@@ -46,6 +50,10 @@ class MonocularVisionPipeline:
             color = colors[track.risk]
             cv2.rectangle(output, track.box[:2], track.box[2:], color, 2)
             details = f"{track.label} ID:{track.track_id} {track.confidence:.2f} {track.risk}"
+            if track.depth_m is not None:
+                details += f" {track.depth_m:.1f}m"
+            if track.speed_mps is not None:
+                details += f" {track.speed_mps:.1f}m/s"
             if track.ttc_s is not None:
                 details += f" TTC:{track.ttc_s:.1f}s"
             cv2.putText(output, details, (track.box[0], max(18, track.box[1] - 8)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)

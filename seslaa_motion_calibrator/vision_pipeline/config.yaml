@@ -1,5 +1,6 @@
 confidence_threshold: 0.45
 max_missed_frames: 8
+min_confirmed_frames: 2
 min_iou: 0.12
 event_cooldown_seconds: 2.0
 path_width_ratio: 0.36
